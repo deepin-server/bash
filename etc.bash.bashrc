@@ -53,3 +53,12 @@ if [ -x /usr/lib/command-not-found -o -x /usr/share/command-not-found/command-no
 		fi
 	}
 fi
+
+PP=$(ps -p $$ -o ppid= | xargs ps --pid | tail -n 1 | awk '{print $4}')
+if [ $PP == "login" ];then
+VT=$(echo $(tty) | awk -F/ '{print $3}')
+case $VT in
+        tty[1-6])
+                export LANG=C && export LANGUAGE=C ;;
+esac
+fi
